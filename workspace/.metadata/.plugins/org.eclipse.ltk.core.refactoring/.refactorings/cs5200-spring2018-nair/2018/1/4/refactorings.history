@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;edu.neu.cs5200.controllers.hello&apos; to &apos;edu.northeastern.cs5200.controllers.hello&apos;&#x0A;- Original project: &apos;cs5200-spring2018-nair&apos;&#x0A;- Original element: &apos;cs5200-spring2018-nair/src/main/java/edu.neu.cs5200.controllers.hello&apos;&#x0A;- Renamed element: &apos;cs5200-spring2018-nair/src/main/java/edu.northeastern.cs5200.controllers.hello&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;edu.neu.cs5200.controllers.hello&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java&lt;edu.neu.cs5200.controllers.hello" name="edu.northeastern.cs5200.controllers.hello" qualified="false" references="true" stamp="1516555748496" textual="false" version="1.0"/>
+</session>
