@@ -14,8 +14,8 @@ import com.jdbc.models.Website;
 // Have created two different tables for Roles that is WebsiteToles, PageRoles.
 // Creating a single table for Privilege.
 public class RoleDao extends ConnectionDao{
-	final String assignWebsiteRole = "INSERT INTO WebsiteRoles (developerId, websiteId, roleId, role) VALUES (?, ?, ?, ?)";
-	final String assignPageRole = "INSERT INTO PageRoles (developerId, pageId, roleId, role) VALUES (?, ?, ?, ?)";
+	final String assignWebsiteRole = "INSERT INTO WebsiteRoles (developerId, websiteId, roleId) VALUES (?, ?, ?)";
+	final String assignPageRole = "INSERT INTO PageRoles (developerId, pageId, roleId) VALUES (?, ?, ?)";
 	final String deleteWebsiteRole = "DELETE FROM WebsiteRoles WHERE roleId = ?";
 	final String deletePageRole = "DELETE FROM PageRoles WHERE roleId = ?";
 	
@@ -43,7 +43,7 @@ public class RoleDao extends ConnectionDao{
 		}
 		return instance;
 	}
-	int assignWebsiteRole(int developerId, int websiteId, Role role) {
+	int assignWebsiteRole(int developerId, int websiteId, int roleId) {
 		int result = -1;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -53,8 +53,7 @@ public class RoleDao extends ConnectionDao{
 			pstmt = connection.prepareStatement(assignWebsiteRole);
 			pstmt.setInt(1, developerId);
 			pstmt.setInt(2, websiteId);
-			pstmt.setInt(3, role.getRoleId());
-			pstmt.setString(4, role.getRoleType());
+			pstmt.setInt(3, roleId);
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			connection.close();
@@ -68,7 +67,7 @@ public class RoleDao extends ConnectionDao{
 	}
 
 	
-	int assignPageRole(int developerId, int pageId, Role role) {
+	int assignPageRole(int developerId, int pageId, int roleId) {
 		int result = -1;
 		Connection connection = null;
 		PreparedStatement pstmt = null;
@@ -78,8 +77,7 @@ public class RoleDao extends ConnectionDao{
 			pstmt = connection.prepareStatement(assignPageRole);
 			pstmt.setInt(1, developerId);
 			pstmt.setInt(2, pageId);
-			pstmt.setInt(3, role.getRoleId());
-			pstmt.setString(4, role.getRoleType());
+			pstmt.setInt(3, roleId);
 			result = pstmt.executeUpdate();
 			pstmt.close();
 			connection.close();
