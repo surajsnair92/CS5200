@@ -19,6 +19,21 @@ public class RoleDao extends ConnectionDao{
 	final String deleteWebsiteRole = "DELETE FROM WebsiteRoles WHERE roleId = ?";
 	final String deletePageRole = "DELETE FROM PageRoles WHERE roleId = ?";
 	
+	final String temp = "Select d.developerId, p.username, r.developerId, r.pageId, r.roleId from"
+			+ "(WebsiteRole r JOIN Developer) on d.developerId = r.developerId"
+			+ "join Person p on p.personId = d.personId where r.pageId = "
+			+ "select w.personId from Websites w join Pages p on w.websiteId = p.personId"
+			+ "where w.websiteName = \"CNET\" and p.title = \"Home\"))";
+	
+	public final String swapRole = "Update Role r"
+			+ "set r.roleId = CASE r.developerId "
+			+ "when (select t.developerId from temp t where t.username = \"charlie\")"
+			+ "then (select t.tempId from temp t wherer t.username = 'bob')"
+			+ "when (select t.developerId from temp t where t.username = 'bob')"
+			+ "then (select t.tempId from temp t where t.username = 'charlie'"
+			+ "else (select t.tempId from temp t wherer t.developerId = r.developerId)"
+			+ "end";
+	public final String dropTempTable = "DROP TABLE temp";
 	
 	private static RoleDao instance = null;
 	
@@ -115,6 +130,28 @@ public class RoleDao extends ConnectionDao{
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	void swapRoles() {
+		int result = -1;
+		try {
+			Class.forName(JDBC_DRIVER);
+			Connection connection = DriverManager.getConnection(databaseURL, username, password);
+			PreparedStatement statement = connection.prepareStatement(temp);
+			result = statement.executeUpdate();
+			PreparedStatement pstmt = connection.prepareStatement(swapRole);
+			result = statement.executeUpdate();
+			PreparedStatement drop = connection.prepareStatement(dropTempTable);
+			result = statement.executeUpdate();
+			statement.close();
+			connection.close();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void main(String...args) {
